@@ -59,7 +59,10 @@ export const save = (source: string): Function =>  async (
     body: source,
   })
   //TODO add progressing feedback
-  const json = await response.json()
+  const json = await response.json();
+
+  localStorage.setItem('rasa_nlu_data', source);
+
   if (json.ok) {
     dispatch({
       type: SAVING_DONE,
