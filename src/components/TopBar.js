@@ -48,6 +48,7 @@ class TopBar extends Component {
     }
     data.rasa_nlu_data = data.rasa_nlu_data || {}
     data.rasa_nlu_data.common_examples = data.rasa_nlu_data.common_examples || []
+    localStorage.setItem('rasa_nlu_data', data.rasa_nlu_data);
     this.props.fetchData(file.name, data)
   }
   render() {
@@ -77,6 +78,14 @@ class TopBar extends Component {
             }}
           >
             <Icon type='download' /> Download
+          </Button>
+          <Button
+            style={ styles.button }
+            type={isUnsaved ? 'primary' : 'default'}
+            // type={'default'}
+            onClick={() => save(generateExport())}
+          >
+            Save
           </Button>
         </div>
       )

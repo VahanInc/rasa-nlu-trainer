@@ -35,11 +35,29 @@ function prepareExamples(examples = []) {
   return examples.map(example => createExample(example))
 }
 
+// ? testData.rasa_nlu_data.common_examples.map(e => createExample(e))
+
+let localStorageRasa = localStorage.getItem('rasa_nlu_data');
+
+function isJSON(str) {
+  try {
+    return JSON.parse(str);
+  } catch(e) {
+    return false;
+  }
+}
+
+localStorageRasa = isJSON(localStorageRasa);
+
+if (!localStorageRasa) {
+  localStorageRasa = testData;
+}
+
 const INITIAL_STATE = {
   filename: 'testData.json',
   originalSource: isOnline ? testData : null,
-  examples: isOnline
-    ? testData.rasa_nlu_data.common_examples.map(e => createExample(e))
+  examples: isOnline && localStorageRasa
+    ? localStorageRasa.rasa_nlu_data.common_examples.map(e => createExample(e))
     : null,
   isUnsaved: false,
   selection: null,
